@@ -1,7 +1,6 @@
 import java.time.LocalDate;
 import java.util.List;
 import java.io.Serializable;
-import java.util.ArrayList;
 
 public class Professor extends Pessoa implements Funcionario, Serializable{
     private static final long serialVersionUID = 1L;
@@ -36,18 +35,7 @@ public class Professor extends Pessoa implements Funcionario, Serializable{
         this.salario = calculaSalario();
     }
 
-//    public Professor() {
-//        super(); // Chama o construtor padrão da classe pai
-//        this.nivelProfessor = null; // ou algum valor padrão
-//        this.formacaoProfessor = null; // ou outro valor padrão
-//        this.disciplinas = new ArrayList<>(); // Inicializa uma lista vazia
-//        this.salario = 0.0; // ou outro valor padrão
-//    }
-
     public Nivel getNivelProfessor() {return nivelProfessor;}
     public List<String> getDisciplinas() {return disciplinas;}
     public Formacao getFormacaoProfessor() {return formacaoProfessor;}
-    public void setNivelProfessor(Nivel nivelProfessor) {this.nivelProfessor = nivelProfessor;}
-    public void setFormacaoProfessor(Formacao formacaoProfessor) {this.formacaoProfessor = formacaoProfessor;}
-    public void setDisciplinas(List<String> disciplinas) {this.disciplinas = disciplinas;}
 }

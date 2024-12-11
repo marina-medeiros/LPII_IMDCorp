@@ -1,10 +1,5 @@
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Scanner;
-import java.time.format.DateTimeParseException;
-import java.util.List;
 
-//verificar entrada de datas
 
 public class Main {
     public static void main(String[] args) {
@@ -76,17 +71,8 @@ public class Main {
                     clearScreen();
                     System.out.println("================== 8: Buscar técnico administrativo ==================");
                     Long matriculaTecBusca = InputUtils.lerLong("Matrícula do técnico administrativo: ");
-                    operacoes.buscarProfessor(matriculaTecBusca);
+                    operacoes.buscarTecnicoADM(matriculaTecBusca);
                     break;
-//                case 9:
-//                    clearScreen();
-//                    System.out.println("================== 9: Calcular salário ==================");
-//                    Long matricula = InputUtils.lerLong("Matrícula do funcionário do qual deseja calcular o salário:");
-//                    Double salario = operacoes.calcularSalario(matricula);
-//                    if(salario != null){
-//                        System.out.println("R$ " + salario);
-//                    }
-//                    break;
                 case 0:
                     clearScreen();
                     System.out.println("================== 0: Salvar e Sair ==================");

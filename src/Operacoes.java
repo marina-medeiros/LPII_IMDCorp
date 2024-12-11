@@ -1,26 +1,15 @@
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 import java.util.List;
-import java.util.ArrayList;
-import java.io.Serializable;
-import java.util.Scanner;
 
 public class Operacoes implements Serializable {
     private BancoDAO banco = BancoDAO.getInstance();
+    DecimalFormat df = new DecimalFormat("#.00");
 
     public BancoDAO getBanco() {
         return banco;
     }
-
-//    public static void salvarFuncionarios(){
-//        ArrayList<Pessoa> funcionarios = BancoDAO.getInstance().getArrayPessoa();
-//        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("dados.bin"))){
-//
-//        }
-//    }
 
     public void cadastrarProfessor(){
         String nome = InputUtils.lerString("Nome: ");
@@ -107,61 +96,67 @@ public class Operacoes implements Serializable {
 
     public void detalharEndereco(Pessoa pessoa){
         System.out.println("Endereço:");
-        System.out.println("Rua: " + pessoa.getEndereco().getRua() + ", " + pessoa.getEndereco().getNumero() + ", " + pessoa.getEndereco().getBairro() + ". " + pessoa.getEndereco().getCidade());
+        System.out.println("Rua: " + pessoa.getEndereco().getRua() + ", " + pessoa.getEndereco().getNumero() + ". Bairro: " + pessoa.getEndereco().getBairro() + ". Cidade: " + pessoa.getEndereco().getCidade());
         System.out.println("CEP: " + pessoa.getEndereco().getCep());
     }
 
+    public void detalharPessoa(Pessoa pessoa){
+        System.out.println("Nome: " + pessoa.getNome());
+        System.out.println("CPF: " + pessoa.getCpf());
+        System.out.println("Data de nascimento: " + pessoa.getDataNascimento());
+        System.out.println("Genero: " + pessoa.getGenero());
+        detalharEndereco(pessoa);
+        System.out.println("Matricula: " + pessoa.getMatricula());
+        System.out.println("Salario: R$ " + df.format(pessoa.getSalario()));
+        System.out.println("Departamento: " + pessoa.getDepartamento());
+        System.out.println("Carga Horaria: " + pessoa.getCargaHoraria() + "h");
+        System.out.println("Data de ingresso: " + pessoa.getDataIngresso());
+
+    }
+
     public void detalharProfessor(Professor professor){
-        System.out.println("-----------------------------------");
-        System.out.println("Professor: " + professor.getNome());
-        System.out.println("CPF: " + professor.getCpf());
-        System.out.println("Data de nascimento: " + professor.getDataNascimento());
-        System.out.println("Genero: " + professor.getGenero());
-        detalharEndereco(professor);
-        System.out.println("Matricula: " + professor.getMatricula());
-        System.out.println("Salario: R$ " + professor.getSalario());
-        System.out.println("Departamento: " + professor.getDepartamento());
-        System.out.println("Carga Horaria: " + professor.getCargaHoraria());
-        System.out.println("Data de ingresso: " + professor.getDataIngresso());
+        detalharPessoa(professor);
         System.out.println("Nivel: " + professor.getNivelProfessor());
         System.out.println("Formação: " + professor.getFormacaoProfessor());
         System.out.println("Disciplinas: ");
         for(String disciplina: professor.getDisciplinas()){
-            System.out.println(disciplina);
+            System.out.println("  -" + disciplina);
         }
         System.out.println("-----------------------------------");
     }
 
     public void detalharTecnicoADM(TecnicoADM tecnicoADM){
-        System.out.println("-----------------------------------");
-        System.out.println("Tecnico: " + tecnicoADM.getNome());
-        System.out.println("CPF: " + tecnicoADM.getCpf());
-        System.out.println("Data de nascimento: " + tecnicoADM.getDataNascimento());
-        System.out.println("Genero: " + tecnicoADM.getGenero());
-        detalharEndereco(tecnicoADM);
-        System.out.println("Matricula: " + tecnicoADM.getMatricula());
-        System.out.println("Salario: R$" + tecnicoADM.getSalario());
-        System.out.println("Departamento: " + tecnicoADM.getDepartamento());
-        System.out.println("Carga Horaria: " + tecnicoADM.getCargaHoraria());
-        System.out.println("Data de ingresso: " + tecnicoADM.getDataIngresso());
+        detalharPessoa(tecnicoADM);
         System.out.println("Nivel: " + tecnicoADM.getNivelTecnico());
         System.out.println("Formação: " + tecnicoADM.getFormacaoTecnico());
         System.out.println("-----------------------------------");
     }
 
     public void listarProfessores(){
+        int count = 0;
         for(Pessoa p : banco.getArrayPessoa()){
             if(p instanceof Professor){
                 detalharProfessor((Professor) p);
+                count++;
             }
+        }
+        System.out.println("Total: " + count + " professores.");
+        if(count == 0){
+            System.out.println("Nenhum professor foi cadastrado.");
         }
     }
 
     public void listarTecnicosADM(){
+        int count = 0;
         for(Pessoa p : banco.getArrayPessoa()){
             if(p instanceof TecnicoADM){
                 detalharTecnicoADM((TecnicoADM) p);
+                count++;
             }
+        }
+        System.out.println("Total: " + count + " técnicos.");
+        if(count == 0){
+            System.out.println("Nenhum tecnico foi cadastrado.");
         }
 
     }
@@ -195,6 +190,7 @@ public class Operacoes implements Serializable {
                 }
             }
         }
+        System.out.println("Professor não encontrado.");
         return null;
     }
 
@@ -207,21 +203,7 @@ public class Operacoes implements Serializable {
                 }
             }
         }
-        return null;
-    }
-
-    public Double calcularSalario(Long matricula){
-        Pessoa pessoa = buscarProfessor(matricula);
-        if(pessoa == null){
-            pessoa = buscarTecnicoADM(matricula);
-        }
-
-        if(pessoa instanceof Professor){
-            return ((Professor) pessoa).getSalario();
-        }else if(pessoa instanceof TecnicoADM){
-            return ((TecnicoADM) pessoa).getSalario();
-        }
-
+        System.out.println("Técnico não encontrado.");
         return null;
     }
 }

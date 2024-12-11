@@ -59,21 +59,6 @@ public class TecnicoADM extends Pessoa implements Funcionario, Serializable{
         this.salario = calculaSalario();
     }
 
-//    public TecnicoADM() {
-//        super(); // Chama o construtor padrão da classe pai
-//        this.nivelTecnico = null; // ou algum valor padrão, se necessário
-//        this.formacaoTecnico = null; // ou outro valor padrão
-//        this.insalubridade = false; // ou outro valor padrão
-//        this.funcaoGratificada = false; // ou outro valor padrão
-//        this.salario = 0.0; // ou outro valor padrão
-//    }
-
     public Nivel getNivelTecnico() { return nivelTecnico;}
-    public void setNivelTecnico(Nivel nivelTecnico) { this.nivelTecnico = nivelTecnico;}
     public Formacao getFormacaoTecnico() { return formacaoTecnico;}
-    public void setFormacaoTecnico(Formacao formacaoTecnico) { this.formacaoTecnico = formacaoTecnico;}
-    public Boolean getInsalubridade() { return insalubridade;}
-    public void setInsalubridade(Boolean insalubridade) { this.insalubridade = insalubridade;}
-    public Boolean getFuncaoGratificada() { return funcaoGratificada;}
-    public void setFuncaoGratificada(Boolean funcaoGratificada) { this.funcaoGratificada = funcaoGratificada;}
 }
