@@ -1,14 +1,26 @@
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.List;
+import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.Scanner;
 
-public class Operacoes {
+public class Operacoes implements Serializable {
     private BancoDAO banco = BancoDAO.getInstance();
 
     public BancoDAO getBanco() {
         return banco;
     }
+
+//    public static void salvarFuncionarios(){
+//        ArrayList<Pessoa> funcionarios = BancoDAO.getInstance().getArrayPessoa();
+//        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("dados.bin"))){
+//
+//        }
+//    }
 
     public void cadastrarProfessor(){
         String nome = InputUtils.lerString("Nome: ");
